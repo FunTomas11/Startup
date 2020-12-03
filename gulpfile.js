@@ -75,6 +75,10 @@ function cleanDist() {
 	return del('dist/**/*', { force: true })
 }
 
+function cleanImg() {
+	return del('app/img/dest/**/*', { force: true })
+}
+
 function startwatch() {
 	watch('app/styl/**/*', { usePolling: true }, styles)
 	watch(['app/js/**/*.js', '!app/js/**/*.min.js'], { usePolling: true }, scripts)
@@ -85,6 +89,7 @@ function startwatch() {
 
 exports.scripts  = scripts
 exports.styles   = styles
+exports.cleanImg = cleanImg 
 exports.images   = images
 exports.build 	 = series(cleanDist, images, scripts, styles, buildCopy)
 exports.default  = series(images, scripts, styles, parallel(browsersync, startwatch))

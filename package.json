@@ -1,9 +1,9 @@
 {
-	"name": "optimizedhtml",
-	"version": "5.0.0",
-	"description": "OptimizedHTML 5 - Lightweight Gulp Starter",
-	"main": "index.js",
-	"author": "WebDesign Master",
+	"name": "startup",
+	"version": "1.0.0",
+	"description": "Startup Template",
+	"main": "app/index.html",
+	"author": "FunTomas11 <krainievlc@gmail.com>",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/core": "^7.12.9",

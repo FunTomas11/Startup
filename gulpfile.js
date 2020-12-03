@@ -44,7 +44,7 @@ function scripts() {
 
 function styles() {
 	return src('app/styl/main.styl')
-	.pipe(styl({ outputStyle: 'compressed' }))
+	.pipe(styl({ compress: true }))
 	.pipe(autoprefixer({ overrideBrowserslist: ['last 10 versions'], grid: true }))
 	.pipe(rename('app.min.css'))
 	.pipe(dest('app/css'))
@@ -69,7 +69,6 @@ function buildCopy() {
 
 ], { base: 'app' })
 .pipe(dest('dist'));
-
 }
 
 function cleanDist() {

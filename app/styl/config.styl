@@ -41,9 +41,9 @@ font('Roboto', italic, 700, '../fonts/roboto-bolditalic-webfont.woff2')
 
 input, textarea
 	outline none
-	&focusrequiredinvalid
+	&:focus:required:invalid
 		border-color red
-	&requiredvalid
+	&:required:valid
 		border-color green
 
 body

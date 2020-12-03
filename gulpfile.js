@@ -3,7 +3,7 @@ let fileswatch = 'html,htm,txt,json,md,woff2' // List of files extensions for wa
 const { src, dest, parallel, series, watch } = require('gulp')
 const browserSync  = require('browser-sync').create()
 const webpack      = require('webpack-stream')
-const sass         = require('gulp-sass')
+const styl         = require('gulp-stylus')
 const autoprefixer = require('gulp-autoprefixer')
 const rename       = require('gulp-rename')
 const imagemin     = require('gulp-imagemin')
@@ -43,8 +43,8 @@ function scripts() {
 }
 
 function styles() {
-	return src('app/sass/main.sass')
-	.pipe(sass({ outputStyle: 'compressed' }))
+	return src('app/styl/main.styl')
+	.pipe(styl({ outputStyle: 'compressed' }))
 	.pipe(autoprefixer({ overrideBrowserslist: ['last 10 versions'], grid: true }))
 	.pipe(rename('app.min.css'))
 	.pipe(dest('app/css'))
@@ -73,18 +73,19 @@ function buildCopy() {
 }
 
 function cleanDist() {
-	return del('dist/**/*', { force: true} )
+	return del('dist/**/*', { force: true })
 }
 
 function startwatch() {
-	watch('app/sass/**/*', { usePolling: true }, styles)
+	watch('app/styl/**/*', { usePolling: true }, styles)
 	watch(['app/js/**/*.js', '!app/js/**/*.min.js'], { usePolling: true }, scripts)
 	watch('app/img/src/**/*.{jpg,jpeg,png,webp,svg,gif}', { usePolling: true }, images)
 	watch(`app/**/*.{${fileswatch}}`, { usePolling: true }).on('change', browserSync.reload)
 }
 
+
 exports.scripts  = scripts
 exports.styles   = styles
 exports.images   = images
-exports.build 	 = series(cleanDist, styles, scripts, images, buildCopy)
-exports.default  = series(scripts, images, styles, parallel(browsersync, startwatch))
+exports.build 	 = series(cleanDist, images, scripts, styles, buildCopy)
+exports.default  = series(images, scripts, styles, parallel(browsersync, startwatch))

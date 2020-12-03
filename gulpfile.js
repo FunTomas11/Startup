@@ -8,6 +8,7 @@ const autoprefixer = require('gulp-autoprefixer')
 const rename       = require('gulp-rename')
 const imagemin     = require('gulp-imagemin')
 const newer        = require('gulp-newer')
+const del 				 = require('del')
 
 function browsersync() {
 	browserSync.init({
@@ -63,10 +64,16 @@ function buildCopy() {
 		'app/css/**/*.min.css',
 		'app/js/**/*.min.js',
 		'app/img/dest/**/*',
+		'app/fonts/**/*',
 		'app/**/*.html'
-])
+
+], { base: 'app' })
 .pipe(dest('dist'));
 
+}
+
+function cleanDist() {
+	return del('dist/**/*', { force: true} )
 }
 
 function startwatch() {
@@ -79,5 +86,5 @@ function startwatch() {
 exports.scripts  = scripts
 exports.styles   = styles
 exports.images   = images
-exports.build 	 = series(styles, scripts, images, buildCopy)
+exports.build 	 = series(cleanDist, styles, scripts, images, buildCopy)
 exports.default  = series(scripts, images, styles, parallel(browsersync, startwatch))
